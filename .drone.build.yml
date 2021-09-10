@@ -1,0 +1,62 @@
+kind: pipeline
+name: build
+type: kubernetes
+
+resources:
+  requests:
+    memory: 256Mi
+
+steps:
+- name: static
+  image: plugins/docker
+  pull: always
+  settings:
+    repo: registry.lan/krichy/webhost-static
+    target: static
+    registry: registry.lan
+    insecure: true
+    auto_tag: true
+
+  privileged: true
+  volumes:
+  - name: docker
+    path: /var/lib/docker
+
+- name: php7
+  image: plugins/docker
+  pull: always
+  settings:
+    repo: registry.lan/krichy/webhost-php7
+    target: php
+    registry: registry.lan
+    insecure: true
+    auto_tag: true
+    build_args:
+    - PHPVERSION=7
+
+  privileged: true
+  volumes:
+  - name: docker
+    path: /var/lib/docker
+
+- name: php8
+  image: plugins/docker
+  pull: always
+  settings:
+    repo: registry.lan/krichy/webhost-php8
+    target: php
+    registry: registry.lan
+    insecure: true
+    auto_tag: true
+    build_args:
+    - PHPVERSION=8
+
+  privileged: true
+  volumes:
+  - name: docker
+    path: /var/lib/docker
+
+volumes:
+- name: docker
+  temp: {}
+

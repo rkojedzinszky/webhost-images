@@ -1,0 +1,47 @@
+#!/bin/sh
+
+ver="${1:-7}"
+
+modules="
+bcmath
+bz2
+calendar
+#com_dotnet
+#dba
+#enchant
+exif
+#ffi
+gd
+gettext
+gmp
+imap
+intl
+#ldap
+mysqli
+##oci8
+##odbc
+opcache
+pcntl
+pgsql
+#pspell
+#shmop
+#skeleton
+#snmp
+soap
+sockets
+sysvmsg
+sysvsem
+sysvshm
+#tidy
+#xsl
+#zend_test
+zip
+"
+
+apk --no-cache add \
+	php${ver} php${ver}-apache2 $(echo "$modules" | sed -e "/^#/d" -e "/^$/d" -e "s/^/php$ver-/")
+
+# Run smoketest
+httpd -t -T
+
+rm "$0"

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+apk --no-cache add apache2
+
+# Listen on 8080
+sed -i \
+	-e "/^Listen/s/.*/Listen 8080/" \
+	/etc/apache2/httpd.conf
+
+# Set PidFile location
+sed -i \
+	-e "/^[[:space:]]*PidFile/s,PidFile.*,PidFile /tmp/httpd.pid," \
+	/etc/apache2/conf.d/mpm.conf
+
+# Redirect logs to stdout/stderr
+chmod 755 /var/log/apache2
+ln -s /dev/stdout /var/log/apache2/access.log
+ln -s /dev/stderr /var/log/apache2/error.log
+
+# Run smoketest
+httpd -t -T
+
+rm "$0"

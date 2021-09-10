@@ -1,0 +1,8 @@
+#!/bin/sh
+
+adduser -h /var/www -s /bin/sh -D -H -u 8080 www
+
+apk --no-cache add \
+	dropbear dropbear-scp openssh-sftp-server tar xz
+
+rm "$0"
