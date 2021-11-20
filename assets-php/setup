@@ -2,44 +2,84 @@
 
 ver="${1:-7}"
 
-modules="
+modules_common="
+apache2
 bcmath
+brotli
 bz2
 calendar
-#com_dotnet
-#dba
-#enchant
+common
+ctype
+curl
+dba
+dom
+embed
+enchant
 exif
-#ffi
+ffi
+fileinfo
+ftp
 gd
 gettext
 gmp
+iconv
 imap
 intl
-#ldap
+ldap
+litespeed
+mbstring
 mysqli
-##oci8
-##odbc
+mysqlnd
+odbc
 opcache
+openssl
 pcntl
+pdo
+pdo_dblib
+pdo_mysql
+pdo_odbc
+pdo_pgsql
+pdo_sqlite
 pgsql
-#pspell
-#shmop
-#skeleton
-#snmp
+phar
+posix
+pspell
+session
+shmop
+simplexml
+snmp
 soap
 sockets
+sodium
+sqlite3
 sysvmsg
 sysvsem
 sysvshm
-#tidy
-#xsl
-#zend_test
+tideways_xhprof
+tidy
+tokenizer
+xml
+xmlreader
+xmlwriter
+xsl
 zip
 "
 
+modules_php7="
+json
+static
+xmlrpc
+"
+
+modules_php8="
+"
+
+all_modules="$modules_common
+$(eval echo \"\${modules_php$ver}\")
+"
+
 apk --no-cache add \
-	php${ver} php${ver}-apache2 $(echo "$modules" | sed -e "/^#/d" -e "/^$/d" -e "s/^/php$ver-/")
+	php${ver} $(echo "$all_modules" | sed -e "/^#/d" -e "/^$/d" -e "s/^/php$ver-/")
 
 # Run smoketest
 httpd -t -T
