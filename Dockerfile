@@ -1,4 +1,4 @@
-FROM alpine:3.14 AS ssh
+FROM alpine:3.15 AS ssh
 
 COPY assets-ssh/ /
 
