@@ -69,7 +69,6 @@ zip
 
 modules_php7="
 json
-static
 xmlrpc
 "
 
