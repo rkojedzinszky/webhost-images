@@ -10,6 +10,8 @@ COPY assets-static /
 
 RUN /setup
 
+CMD ["/usr/sbin/httpd", "-DFOREGROUND"]
+
 FROM static-base AS static
 
 USER 8080
