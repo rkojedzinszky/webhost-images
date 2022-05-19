@@ -17,12 +17,17 @@ steps:
   privileged: true
   pull: always
   settings:
+    auto_label: false
     auto_tag: true
     auto_tag_suffix: arm64
-    insecure: true
-    registry: registry.lan
-    repo: registry.lan/krichy/webhost-static
+    mirror:
+      from_secret: hub_docker_mirror
+    password:
+      from_secret: ghcr.io.password
+    registry: ghcr.io
+    repo: ghcr.io/rkojedzinszky/webhost-images/static
     target: static
+    username: rkojedzinszky
   volumes:
   - name: docker
     path: /var/lib/docker
@@ -31,14 +36,19 @@ steps:
   privileged: true
   pull: always
   settings:
+    auto_label: false
     auto_tag: true
     auto_tag_suffix: arm64
     build_args:
     - PHPVERSION=7
-    insecure: true
-    registry: registry.lan
-    repo: registry.lan/krichy/webhost-php7
+    mirror:
+      from_secret: hub_docker_mirror
+    password:
+      from_secret: ghcr.io.password
+    registry: ghcr.io
+    repo: ghcr.io/rkojedzinszky/webhost-images/php7
     target: php
+    username: rkojedzinszky
   volumes:
   - name: docker
     path: /var/lib/docker
@@ -47,14 +57,19 @@ steps:
   privileged: true
   pull: always
   settings:
+    auto_label: false
     auto_tag: true
     auto_tag_suffix: arm64
     build_args:
     - PHPVERSION=8
-    insecure: true
-    registry: registry.lan
-    repo: registry.lan/krichy/webhost-php8
+    mirror:
+      from_secret: hub_docker_mirror
+    password:
+      from_secret: ghcr.io.password
+    registry: ghcr.io
+    repo: ghcr.io/rkojedzinszky/webhost-images/php8
     target: php
+    username: rkojedzinszky
   volumes:
   - name: docker
     path: /var/lib/docker
@@ -81,12 +96,17 @@ steps:
   privileged: true
   pull: always
   settings:
+    auto_label: false
     auto_tag: true
     auto_tag_suffix: arm
-    insecure: true
-    registry: registry.lan
-    repo: registry.lan/krichy/webhost-static
+    mirror:
+      from_secret: hub_docker_mirror
+    password:
+      from_secret: ghcr.io.password
+    registry: ghcr.io
+    repo: ghcr.io/rkojedzinszky/webhost-images/static
     target: static
+    username: rkojedzinszky
   volumes:
   - name: docker
     path: /var/lib/docker
@@ -95,14 +115,19 @@ steps:
   privileged: true
   pull: always
   settings:
+    auto_label: false
     auto_tag: true
     auto_tag_suffix: arm
     build_args:
     - PHPVERSION=7
-    insecure: true
-    registry: registry.lan
-    repo: registry.lan/krichy/webhost-php7
+    mirror:
+      from_secret: hub_docker_mirror
+    password:
+      from_secret: ghcr.io.password
+    registry: ghcr.io
+    repo: ghcr.io/rkojedzinszky/webhost-images/php7
     target: php
+    username: rkojedzinszky
   volumes:
   - name: docker
     path: /var/lib/docker
@@ -111,14 +136,19 @@ steps:
   privileged: true
   pull: always
   settings:
+    auto_label: false
     auto_tag: true
     auto_tag_suffix: arm
     build_args:
     - PHPVERSION=8
-    insecure: true
-    registry: registry.lan
-    repo: registry.lan/krichy/webhost-php8
+    mirror:
+      from_secret: hub_docker_mirror
+    password:
+      from_secret: ghcr.io.password
+    registry: ghcr.io
+    repo: ghcr.io/rkojedzinszky/webhost-images/php8
     target: php
+    username: rkojedzinszky
   volumes:
   - name: docker
     path: /var/lib/docker
@@ -144,12 +174,17 @@ steps:
   privileged: true
   pull: always
   settings:
+    auto_label: false
     auto_tag: true
     auto_tag_suffix: amd64
-    insecure: true
-    registry: registry.lan
-    repo: registry.lan/krichy/webhost-static
+    mirror:
+      from_secret: hub_docker_mirror
+    password:
+      from_secret: ghcr.io.password
+    registry: ghcr.io
+    repo: ghcr.io/rkojedzinszky/webhost-images/static
     target: static
+    username: rkojedzinszky
   volumes:
   - name: docker
     path: /var/lib/docker
@@ -158,14 +193,19 @@ steps:
   privileged: true
   pull: always
   settings:
+    auto_label: false
     auto_tag: true
     auto_tag_suffix: amd64
     build_args:
     - PHPVERSION=7
-    insecure: true
-    registry: registry.lan
-    repo: registry.lan/krichy/webhost-php7
+    mirror:
+      from_secret: hub_docker_mirror
+    password:
+      from_secret: ghcr.io.password
+    registry: ghcr.io
+    repo: ghcr.io/rkojedzinszky/webhost-images/php7
     target: php
+    username: rkojedzinszky
   volumes:
   - name: docker
     path: /var/lib/docker
@@ -174,14 +214,19 @@ steps:
   privileged: true
   pull: always
   settings:
+    auto_label: false
     auto_tag: true
     auto_tag_suffix: amd64
     build_args:
     - PHPVERSION=8
-    insecure: true
-    registry: registry.lan
-    repo: registry.lan/krichy/webhost-php8
+    mirror:
+      from_secret: hub_docker_mirror
+    password:
+      from_secret: ghcr.io.password
+    registry: ghcr.io
+    repo: ghcr.io/rkojedzinszky/webhost-images/php8
     target: php
+    username: rkojedzinszky
   volumes:
   - name: docker
     path: /var/lib/docker
@@ -202,27 +247,30 @@ platform:
   variant: v8
 steps:
 - image: plugins/manifest
-  name: registry.lan/krichy/webhost-static
+  name: ghcr.io/rkojedzinszky/webhost-images/static
   pull: always
   settings:
     auto_tag: true
-    insecure: true
-    registry: registry.lan
-    spec: manifests/registry.lan-krichy-webhost-static.tmpl
+    password:
+      from_secret: ghcr.io.password
+    spec: manifests/ghcr.io-rkojedzinszky-webhost-images-static.tmpl
+    username: rkojedzinszky
 - image: plugins/manifest
-  name: registry.lan/krichy/webhost-php7
+  name: ghcr.io/rkojedzinszky/webhost-images/php7
   pull: always
   settings:
     auto_tag: true
-    insecure: true
-    registry: registry.lan
-    spec: manifests/registry.lan-krichy-webhost-php7.tmpl
+    password:
+      from_secret: ghcr.io.password
+    spec: manifests/ghcr.io-rkojedzinszky-webhost-images-php7.tmpl
+    username: rkojedzinszky
 - image: plugins/manifest
-  name: registry.lan/krichy/webhost-php8
+  name: ghcr.io/rkojedzinszky/webhost-images/php8
   pull: always
   settings:
     auto_tag: true
-    insecure: true
-    registry: registry.lan
-    spec: manifests/registry.lan-krichy-webhost-php8.tmpl
+    password:
+      from_secret: ghcr.io.password
+    spec: manifests/ghcr.io-rkojedzinszky-webhost-images-php8.tmpl
+    username: rkojedzinszky
 type: kubernetes

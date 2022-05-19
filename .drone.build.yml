@@ -11,11 +11,16 @@ steps:
   image: plugins/docker
   pull: always
   settings:
-    repo: registry.lan/krichy/webhost-static
     target: static
-    registry: registry.lan
-    insecure: true
+    repo: ghcr.io/rkojedzinszky/webhost-images/static
+    registry: ghcr.io
+    username: rkojedzinszky
+    password:
+      from_secret: ghcr.io.password
     auto_tag: true
+    auto_label: false
+    mirror:
+      from_secret: hub_docker_mirror
 
   privileged: true
   volumes:
@@ -26,13 +31,18 @@ steps:
   image: plugins/docker
   pull: always
   settings:
-    repo: registry.lan/krichy/webhost-php7
     target: php
-    registry: registry.lan
-    insecure: true
-    auto_tag: true
     build_args:
     - PHPVERSION=7
+    repo: ghcr.io/rkojedzinszky/webhost-images/php7
+    registry: ghcr.io
+    username: rkojedzinszky
+    password:
+      from_secret: ghcr.io.password
+    auto_tag: true
+    auto_label: false
+    mirror:
+      from_secret: hub_docker_mirror
 
   privileged: true
   volumes:
@@ -43,13 +53,18 @@ steps:
   image: plugins/docker
   pull: always
   settings:
-    repo: registry.lan/krichy/webhost-php8
     target: php
-    registry: registry.lan
-    insecure: true
-    auto_tag: true
     build_args:
     - PHPVERSION=8
+    repo: ghcr.io/rkojedzinszky/webhost-images/php8
+    registry: ghcr.io
+    username: rkojedzinszky
+    password:
+      from_secret: ghcr.io.password
+    auto_tag: true
+    auto_label: false
+    mirror:
+      from_secret: hub_docker_mirror
 
   privileged: true
   volumes:
