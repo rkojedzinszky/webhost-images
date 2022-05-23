@@ -79,6 +79,13 @@ all_modules="$modules_common
 $(eval echo \"\${modules_php$ver}\")
 "
 
+# Enable mpm_prefork
+sed -i \
+	-e "/^Listen/s/.*/Listen 8080/" \
+	-e "/^LoadModule mpm_/s/^/#/" \
+	-e "/^#LoadModule mpm_prefork_module/s/^#//" \
+	/etc/apache2/httpd.conf
+
 apk --no-cache add \
 	php${ver} $(echo "$all_modules" | sed -e "/^#/d" -e "/^$/d" -e "s/^/php$ver-/")
 

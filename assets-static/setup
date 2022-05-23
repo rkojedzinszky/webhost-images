@@ -2,9 +2,11 @@
 
 apk --no-cache add apache2
 
-# Listen on 8080
+# Listen on 8080, enable mpm_event
 sed -i \
 	-e "/^Listen/s/.*/Listen 8080/" \
+	-e "/^LoadModule mpm_/s/^/#/" \
+	-e "/^#LoadModule mpm_event_module/s/^#//" \
 	/etc/apache2/httpd.conf
 
 # Set PidFile location
