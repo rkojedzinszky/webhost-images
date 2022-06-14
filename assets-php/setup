@@ -87,6 +87,7 @@ sed -i \
 	/etc/apache2/httpd.conf
 
 apk --no-cache add \
+	tzdata \
 	php${ver} $(echo "$all_modules" | sed -e "/^#/d" -e "/^$/d" -e "s/^/php$ver-/")
 
 # Run smoketest
