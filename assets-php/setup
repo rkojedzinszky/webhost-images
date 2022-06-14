@@ -36,6 +36,7 @@ odbc
 opcache
 openssl
 pcntl
+pear
 pdo
 pdo_dblib
 pdo_mysql
