@@ -1,6 +1,4 @@
-ARG BASEIMAGE=alpine:3.15
-
-FROM ${BASEIMAGE} AS ssh
+FROM alpine:3.15 AS ssh
 
 LABEL org.opencontainers.image.authors "Richard Kojedzinszky <richard@kojedz.in>"
 LABEL org.opencontainers.image.source https://github.com/rkojedzinszky/webhost-images
