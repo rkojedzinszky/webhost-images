@@ -91,6 +91,12 @@ apk --no-cache add \
 	tzdata \
 	php${ver} $(echo "$all_modules" | sed -e "/^#/d" -e "/^$/d" -e "s/^/php$ver-/")
 
+# tune upload max size
+sed -i \
+	-e "/^upload_max_filesize /s/=.*/= 20M/" \
+	-e "/^post_max_size /s/=.*/= 32M/" \
+	/etc/php${ver}/php.ini
+
 # Run smoketest
 httpd -t -T
 
