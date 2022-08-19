@@ -1,6 +1,7 @@
 #!/bin/sh
 
-apk --no-cache add apache2
+apk --no-cache add apache2 wget curl tar vim nano zip sqlite \
+	postgresql14-client mysql-client
 
 # Listen on 8080, enable mpm_event
 sed -i \
