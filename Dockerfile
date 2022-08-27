@@ -13,7 +13,7 @@ COPY assets-static /
 
 RUN /setup
 
-CMD ["/usr/sbin/httpd", "-DFOREGROUND"]
+CMD ["/usr/sbin/httpd", "-DFOREGROUND", "-T"]
 
 FROM static-base AS static
 
