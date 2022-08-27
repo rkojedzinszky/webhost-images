@@ -3,8 +3,13 @@
 apk --no-cache add apache2 wget curl tar vim nano zip sqlite \
 	postgresql14-client mysql-client
 
+# Move whole /var/www to /usr/www
+mv /var/www /usr/www
+
 # Listen on 8080, enable mpm_event
 sed -i \
+	-e "/^ServerRoot/s, .*, /usr/www," \
+	-e "/^DocumentRoot/,/^<\/Directory>/d" \
 	-e "/^Listen/s/.*/Listen 8080/" \
 	-e "/^LoadModule mpm_/s/^/#/" \
 	-e "/^#LoadModule mpm_event_module/s/^#//" \
