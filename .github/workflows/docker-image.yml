@@ -19,14 +19,24 @@ jobs:
     strategy:
       matrix:
         include:
-          - variant: static
+          - image: static
+            base: alpine:3.17
             target: static
-          - variant: php7
+
+          - image: php7
+            base: alpine:3.15
             target: php
             phpversion: "7"
-          - variant: php8
+
+          - image: php8
+            base: alpine:3.16
             target: php
             phpversion: "8"
+
+          - image: php81
+            base: alpine:3.17
+            target: php
+            phpversion: "81"
 
     steps:
       - name: Checkout repository
@@ -49,7 +59,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.variant }}
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.image }}
           tags: |
             type=semver,pattern={{major}}.{{minor}}.{{patch}}
             type=semver,pattern={{major}}.{{minor}}
@@ -64,6 +74,7 @@ jobs:
           push: true
           target: ${{ matrix.target }}
           build-args: |
+            BASE=${{ matrix.base }}
             PHPVERSION=${{ matrix.phpversion }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

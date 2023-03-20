@@ -2,83 +2,18 @@
 
 set -e
 
-ver="${1:-7}"
+if [ -z "$1" ]; then
+	echo "Specify php version as first arg"
+	exit 1
+fi
 
-modules_common="
-apache2
-bcmath
-brotli
-bz2
-calendar
-common
-ctype
-curl
-dba
-dom
-embed
-enchant
-exif
-ffi
-fileinfo
-ftp
-gd
-gettext
-gmp
-iconv
-imap
-intl
-ldap
-litespeed
-mbstring
-mysqli
-mysqlnd
-odbc
-opcache
-openssl
-pcntl
-pear
-pdo
-pdo_dblib
-pdo_mysql
-pdo_odbc
-pdo_pgsql
-pdo_sqlite
-pgsql
-phar
-posix
-pspell
-session
-shmop
-simplexml
-snmp
-soap
-sockets
-sodium
-sqlite3
-sysvmsg
-sysvsem
-sysvshm
-tideways_xhprof
-tidy
-tokenizer
-xml
-xmlreader
-xmlwriter
-xsl
-zip
-"
+php="php${1}"
 
-modules_php7="
-json
-xmlrpc
-"
+exclude="(pecl|cgi|dbg|dev|doc|fpm|phalcon|phpdbg)"
 
-modules_php8="
-"
+packages=$(apk --no-cache search ${php}- | grep "^${php}-" | grep -vE "${php}-${exclude}-" | sed -r -e "s/-[^-]+-[^-]+$//")
 
-all_modules="$modules_common
-$(eval echo \"\${modules_php$ver}\")
-"
+apk --no-cache add tzdata ${packages}
 
 # Enable mpm_prefork
 sed -i \
@@ -87,15 +22,11 @@ sed -i \
 	-e "/^#LoadModule mpm_prefork_module/s/^#//" \
 	/etc/apache2/httpd.conf
 
-apk --no-cache add \
-	tzdata \
-	php${ver} $(echo "$all_modules" | sed -e "/^#/d" -e "/^$/d" -e "s/^/php$ver-/")
-
-# tune upload max size
+# tune php upload max size
 sed -i \
 	-e "/^upload_max_filesize /s/=.*/= 20M/" \
 	-e "/^post_max_size /s/=.*/= 32M/" \
-	/etc/php${ver}/php.ini
+	/etc/${php}/php.ini
 
 # Run smoketest
 httpd -t -T
