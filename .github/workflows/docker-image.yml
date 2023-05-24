@@ -38,6 +38,11 @@ jobs:
             target: php
             phpversion: "81"
 
+          - image: php82
+            base: alpine:3.18
+            target: php
+            phpversion: "82"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
