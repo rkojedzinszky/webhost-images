@@ -22,7 +22,7 @@ jobs:
       matrix:
         include:
           - image: static
-            base: alpine:3.20
+            base: alpine:3.21
             target: static
 
           - image: php81
@@ -31,12 +31,12 @@ jobs:
             phpversion: "81"
 
           - image: php82
-            base: alpine:3.20
+            base: alpine:3.21
             target: php
             phpversion: "82"
 
           - image: php83
-            base: alpine:3.20
+            base: alpine:3.21
             target: php
             phpversion: "83"
 
