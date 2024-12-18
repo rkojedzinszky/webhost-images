@@ -9,17 +9,21 @@ fi
 
 php="php${1}"
 
-exclude="(pecl|cgi|dbg|dev|doc|fpm|phalcon|phpdbg)"
+exclude="(pecl|cgi|dbg|dev|doc|phalcon|phpdbg)"
 
 packages=$(apk --no-cache search ${php}- | grep "^${php}-" | grep -vE "${php}-${exclude}-" | sed -r -e "s/-[^-]+-[^-]+$//")
 
-apk --no-cache add tzdata ${packages}
+apk --no-cache add tzdata apache2-proxy ${packages}
 
-# Enable mpm_prefork
+# make php module conditional
+sed -r -i -e '1i\' -e '<IfDefine !APACHE_PHP_FPM>' -e '$a\' -e '</IfDefine>' /etc/apache2/conf.d/php*module.conf
+
+# remove default proxy configuration
+rm /etc/apache2/conf.d/proxy.conf
+
+# Disable mpm_ modules
 sed -i \
-	-e "/^Listen/s/.*/Listen 8080/" \
 	-e "/^LoadModule mpm_/s/^/#/" \
-	-e "/^#LoadModule mpm_prefork_module/s/^#//" \
 	/etc/apache2/httpd.conf
 
 # tune php upload max size
@@ -28,7 +32,16 @@ sed -i \
 	-e "/^post_max_size /s/=.*/= 32M/" \
 	/etc/${php}/php.ini
 
+# create php-fpm
+cat > /usr/local/bin/php-fpm <<EOF
+#!/bin/sh
+
+exec /usr/sbin/php-fpm${1} -y /etc/php-fpm.conf
+EOF
+chmod +x /usr/local/bin/php-fpm
+
 # Run smoketest
 httpd -t -T
+httpd -t -T -DAPACHE_PHP_FPM
 
 rm "$0"
