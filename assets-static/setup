@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 apk --no-cache add apache2 wget curl tar vim nano zip sqlite \
 	postgresql16-client mysql-client
 
@@ -15,10 +17,9 @@ sed -i \
 	-e "/^#LoadModule mpm_event_module/s/^#//" \
 	/etc/apache2/httpd.conf
 
-# Set PidFile location
-sed -i \
-	-e "/^[[:space:]]*PidFile/s,PidFile.*,PidFile /tmp/httpd.pid," \
-	/etc/apache2/conf.d/mpm.conf
+# test if original mpm configuration exists, then overwrite it
+test -f /etc/apache2/conf.d/mpm.conf
+mv /etc/apache2/conf.d/zz-mpm.conf /etc/apache2/conf.d/mpm.conf
 
 # Redirect logs to stdout/stderr
 chmod 755 /var/log/apache2
