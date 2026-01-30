@@ -1,4 +1,4 @@
-ARG BASE=alpine:3.21
+ARG BASE
 
 FROM ${BASE} AS ssh
 

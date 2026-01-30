@@ -22,7 +22,7 @@ jobs:
       matrix:
         include:
           - image: static
-            base: alpine:3.22
+            base: alpine:3.23
             target: static
 
           - image: php82
@@ -31,14 +31,19 @@ jobs:
             phpversion: "82"
 
           - image: php83
-            base: alpine:3.22
+            base: alpine:3.23
             target: php
             phpversion: "83"
 
           - image: php84
-            base: alpine:3.22
+            base: alpine:3.23
             target: php
             phpversion: "84"
+
+          - image: php85
+            base: alpine:3.23
+            target: php
+            phpversion: "85"
 
     steps:
       - name: Checkout repository
