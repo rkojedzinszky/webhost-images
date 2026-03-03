@@ -40,6 +40,9 @@ exec /usr/sbin/php-fpm${1} -y /etc/php-fpm.conf
 EOF
 chmod +x /usr/local/bin/php-fpm
 
+# add php symlink for convenience
+ln -s /usr/bin/php${1} /usr/local/bin/php
+
 # Run smoketest
 httpd -t -T
 httpd -t -T -DAPACHE_PHP_FPM
