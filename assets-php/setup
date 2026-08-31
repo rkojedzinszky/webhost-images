@@ -9,7 +9,7 @@ fi
 
 php="php${1}"
 
-exclude="(pecl|cgi|dbg|dev|doc|phalcon|phpdbg)"
+exclude="(pecl|cgi|dbg|dev|doc|phalcon|phpdbg|spx)"
 
 packages=$(apk --no-cache search ${php}- | grep "^${php}-" | grep -vE "${php}-${exclude}-" | sed -r -e "s/-[^-]+-[^-]+$//")
 
