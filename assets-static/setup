@@ -2,6 +2,8 @@
 
 set -e
 
+apk --no-cache upgrade
+
 apk --no-cache add apache2 wget curl tar vim nano zip sqlite \
 	postgresql16-client mysql-client
 
