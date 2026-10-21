@@ -31,17 +31,17 @@ jobs:
             phpversion: "82"
 
           - image: php83
-            base: alpine:3.23
+            base: alpine:3.24
             target: php
             phpversion: "83"
 
           - image: php84
-            base: alpine:3.23
+            base: alpine:3.24
             target: php
             phpversion: "84"
 
           - image: php85
-            base: alpine:3.23
+            base: alpine:3.24
             target: php
             phpversion: "85"
 
